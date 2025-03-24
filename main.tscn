@@ -1,0 +1,71 @@
+[gd_scene load_steps=8 format=3 uid="uid://bgbprrvs0arfd"]
+
+[ext_resource type="PackedScene" uid="uid://byl1hhajhbycx" path="res://scene1.tscn" id="1_d82go"]
+[ext_resource type="Script" path="res://main.gd" id="1_vjsvi"]
+[ext_resource type="PackedScene" uid="uid://c4a3hgrh46vv6" path="res://mob.tscn" id="2_3un5f"]
+[ext_resource type="PackedScene" uid="uid://cjmodfdr1neur" path="res://reward.tscn" id="3_03ulp"]
+[ext_resource type="PackedScene" uid="uid://cnr62dj1wc1fd" path="res://hud.tscn" id="4_6lfx0"]
+
+[sub_resource type="Curve2D" id="Curve2D_bghst"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 4, -3, 0, 0, 0, 0, 1151, -3, 0, 0, 0, 0, 1147, 643, 0, 0, 0, 0, 0, 643, 0, 0, 0, 0, 4, -3)
+}
+point_count = 5
+
+[sub_resource type="Curve2D" id="Curve2D_y5m8c"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 50, 20, 0, 0, 0, 0, 150, 200, 0, 0, 0, 0, 400, 400, 0, 0, 0, 0, 800, 500, 0, 0, 0, 0, 1000, 200, 0, 0, 0, 0, 900, 0)
+}
+point_count = 6
+
+[node name="Main" type="Node"]
+script = ExtResource("1_vjsvi")
+mob_scene = ExtResource("2_3un5f")
+reward_scene = ExtResource("3_03ulp")
+
+[node name="Player" parent="." instance=ExtResource("1_d82go")]
+position = Vector2(-1, 7)
+
+[node name="SpeedBoostTimer" type="Timer" parent="Player"]
+one_shot = true
+
+[node name="MobTimer" type="Timer" parent="."]
+wait_time = 0.2
+
+[node name="ScoreTimer" type="Timer" parent="."]
+
+[node name="RewardTimer" type="Timer" parent="."]
+wait_time = 5.0
+
+[node name="StartTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="StartPosition" type="Marker2D" parent="."]
+position = Vector2(568, 555)
+
+[node name="MobPath" type="Path2D" parent="."]
+curve = SubResource("Curve2D_bghst")
+
+[node name="MobSpawnLocation" type="PathFollow2D" parent="MobPath"]
+position = Vector2(4, -3)
+
+[node name="HUD" parent="." instance=ExtResource("4_6lfx0")]
+
+[node name="RewardPath" type="Path2D" parent="."]
+position = Vector2(-4.36842, 0)
+scale = Vector2(1.08737, 1.13)
+curve = SubResource("Curve2D_y5m8c")
+
+[node name="RewardSpawnLocation" type="PathFollow2D" parent="RewardPath"]
+position = Vector2(50, 20)
+rotation = 1.0637
+
+[connection signal="hit" from="Player" to="." method="game_over"]
+[connection signal="hit_gold" from="Player" to="." method="_on_player_hit_gold"]
+[connection signal="timeout" from="Player/SpeedBoostTimer" to="Player" method="_on_speed_boost_timer_timeout"]
+[connection signal="timeout" from="MobTimer" to="." method="_on_mob_timer_timeout"]
+[connection signal="timeout" from="ScoreTimer" to="." method="_on_score_timer_timeout"]
+[connection signal="timeout" from="RewardTimer" to="." method="_on_reward_timer_timeout"]
+[connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
+[connection signal="start_game" from="HUD" to="." method="new_game"]
