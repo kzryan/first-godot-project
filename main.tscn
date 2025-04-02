@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://bgbprrvs0arfd"]
+[gd_scene load_steps=9 format=3 uid="uid://bgbprrvs0arfd"]
 
 [ext_resource type="PackedScene" uid="uid://byl1hhajhbycx" path="res://scene1.tscn" id="1_d82go"]
-[ext_resource type="Script" path="res://main.gd" id="1_vjsvi"]
+[ext_resource type="Script" uid="uid://du22a1io2ti5d" path="res://main.gd" id="1_vjsvi"]
 [ext_resource type="PackedScene" uid="uid://c4a3hgrh46vv6" path="res://mob.tscn" id="2_3un5f"]
 [ext_resource type="PackedScene" uid="uid://cjmodfdr1neur" path="res://reward.tscn" id="3_03ulp"]
 [ext_resource type="PackedScene" uid="uid://cnr62dj1wc1fd" path="res://hud.tscn" id="4_6lfx0"]
+[ext_resource type="PackedScene" uid="uid://cj3fxdowdf76r" path="res://bullet.tscn" id="5_7mycd"]
 
 [sub_resource type="Curve2D" id="Curve2D_bghst"]
 _data = {
@@ -25,9 +26,10 @@ reward_scene = ExtResource("3_03ulp")
 
 [node name="Player" parent="." instance=ExtResource("1_d82go")]
 position = Vector2(-1, 7)
+bullet_scene = ExtResource("5_7mycd")
 
-[node name="SpeedBoostTimer" type="Timer" parent="Player"]
-one_shot = true
+[node name="CooldownTimer" type="Timer" parent="Player"]
+wait_time = 0.3
 
 [node name="MobTimer" type="Timer" parent="."]
 wait_time = 0.2
@@ -63,7 +65,7 @@ rotation = 1.0637
 
 [connection signal="hit" from="Player" to="." method="game_over"]
 [connection signal="hit_gold" from="Player" to="." method="_on_player_hit_gold"]
-[connection signal="timeout" from="Player/SpeedBoostTimer" to="Player" method="_on_speed_boost_timer_timeout"]
+[connection signal="timeout" from="Player/CooldownTimer" to="Player" method="_on_cooldown_timer_timeout"]
 [connection signal="timeout" from="MobTimer" to="." method="_on_mob_timer_timeout"]
 [connection signal="timeout" from="ScoreTimer" to="." method="_on_score_timer_timeout"]
 [connection signal="timeout" from="RewardTimer" to="." method="_on_reward_timer_timeout"]

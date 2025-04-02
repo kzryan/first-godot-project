@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://cj3fxdowdf76r"]
+
+[ext_resource type="Script" uid="uid://chh43a4qn30aa" path="res://bullet.gd" id="1_v7oki"]
+[ext_resource type="Texture2D" uid="uid://dow0yppccip0l" path="res://fireball.png" id="2_v8qja"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_rtl8c"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_t4vbm"]
+radius = 24.0208
+
+[node name="Bullet" type="RigidBody2D" groups=["bullet"]]
+modulate = Color(0.629917, 0, 0.0832917, 1)
+material = SubResource("CanvasItemMaterial_rtl8c")
+script = ExtResource("1_v7oki")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_t4vbm")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-2, -2)
+scale = Vector2(0.25, 0.246)
+texture = ExtResource("2_v8qja")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

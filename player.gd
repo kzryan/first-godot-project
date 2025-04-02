@@ -1,10 +1,12 @@
 extends Area2D
 signal hit
+signal attack
 signal hit_gold
-@export var speed = 400 # How fast the player will move (pixels/sec).
+@export var bullet_scene: PackedScene
+@export var speed = 300 # How fast the player will move (pixels/sec).
 var screen_size # Size of the game windckedSceneow.
-var boost_factor = 1.01
-var boost_duration = 2.0  # Seconds
+var shoot_direction
+var can_shoot = true
 
 
 # Called when the node enters the scene tree for the first time.
@@ -19,17 +21,26 @@ func _process(delta: float) -> void:
 
 	if Input.is_action_pressed("move_right"):
 		velocity.x += 1
+		shoot_direction = Vector2.RIGHT
 	if Input.is_action_pressed("move_left"):
 		velocity.x -= 1
+		shoot_direction = Vector2.LEFT
 	if Input.is_action_pressed("move_down"):
 		velocity.y += 1
+		shoot_direction = Vector2.DOWN
 	if Input.is_action_pressed("move_up"):
 		velocity.y -= 1
-	if Input.is_action_pressed("speed_boost"):
-		speed*=boost_factor
-		$SpeedBoostTimer.start(boost_duration)
-		print("Speeding up")
-	
+		shoot_direction = Vector2.UP
+	if Input.is_action_pressed("attack"):
+		#attack
+		var bullet = bullet_scene.instantiate()
+		# Spawn the mob by adding it to the Main scene.
+		if can_shoot :
+			add_child(bullet)
+			bullet.fire(shoot_direction)
+		can_shoot = false
+		$CooldownTimer.start()
+		
 	
 	if velocity.length() > 0:
 		velocity = velocity.normalized() * speed
@@ -50,7 +61,6 @@ func _process(delta: float) -> void:
 		$AnimatedSprite2D.flip_v = velocity.y > 0
 	
 
-
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("enemies"):  # Only detect enemies
 		hide()  # Player disappears after being hit.
@@ -66,8 +76,8 @@ func start(pos):
 	show()
 	$CollisionShape2D.disabled = false
 
-
-func _on_speed_boost_timer_timeout() -> void:
-	speed /= boost_factor  # Reset speed when timer ends
-	print("timedout")
 	
+
+
+func _on_cooldown_timer_timeout() -> void:
+	can_shoot = true

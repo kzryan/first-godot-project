@@ -1,0 +1,9 @@
+res://main.tscn
+res://hud.tscn
+res://reward.tscn
+res://scene1.tscn
+res://player.gd
+res://bullet.tscn
+res://bullet.gd
+res://main.gd
+res://mob.tscn
