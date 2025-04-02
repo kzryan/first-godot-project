@@ -5,7 +5,7 @@ signal hit_gold
 @export var bullet_scene: PackedScene
 @export var speed = 300 # How fast the player will move (pixels/sec).
 var screen_size # Size of the game windckedSceneow.
-var shoot_direction
+var shoot_direction = Vector2.RIGHT
 var can_shoot = true
 
 
@@ -33,13 +33,15 @@ func _process(delta: float) -> void:
 		shoot_direction = Vector2.UP
 	if Input.is_action_pressed("attack"):
 		#attack
-		var bullet = bullet_scene.instantiate()
-		# Spawn the mob by adding it to the Main scene.
+		# Spawn the bullet by adding it to the player scene
 		if can_shoot :
-			add_child(bullet)
+			var bullet = bullet_scene.instantiate()
+			add_sibling(bullet)
+			bullet.position = position
 			bullet.fire(shoot_direction)
+			$CooldownTimer.start()
 		can_shoot = false
-		$CooldownTimer.start()
+		
 		
 	
 	if velocity.length() > 0:

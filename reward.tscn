@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://cjmodfdr1neur"]
 
 [ext_resource type="Texture2D" uid="uid://60ac456ngrye" path="res://dodge_the_creeps_2d_assets/dodge_the_creeps_2d_assets/art/gold.webp" id="1_f7luo"]
-[ext_resource type="Script" uid="uid://ck1bb1dt0eyo8" path="res://reward.gd" id="1_iijpj"]
+[ext_resource type="Script" path="res://reward.gd" id="1_iijpj"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_vfv5x"]
 animations = [{
