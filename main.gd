@@ -106,10 +106,5 @@ func clearEnemies() -> void:
 		reward.queue_free()
 
 
-func _on_bullet_shot_enemy() -> void:
-	print("shot enemy signal properly received")
-	
-
-
-func _on_bullet_shot_gold() -> void:
-	print("shot gold signal properly received")
+func _on_shot_enemy() -> void:
+	pass

@@ -4,9 +4,11 @@ extends RigidBody2D
 signal shot_enemy
 signal shot_gold
 
-
 func _ready() -> void:
-	pass
+	var parent_node = get_parent()
+	if parent_node:
+		shot_enemy.connect(parent_node._on_shot_enemy)
+		shot_gold.connect(parent_node._on_player_hit_gold)
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -21,10 +23,10 @@ func _on_visible_on_screen_notifier_2d_screen_exited():
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("enemies"):  # Only detect enemies
-		print("emiting shot enemy")
 		shot_enemy.emit()
+		body.queue_free()
 		
 	elif body.is_in_group("reward"):
-		print("emiting shot gold")
 		shot_gold.emit()
+		body.queue_free()
 		

@@ -5,4 +5,5 @@ res://scene1.tscn
 res://bullet.tscn
 res://mob.tscn
 res://bullet.gd
+res://mob.gd
 res://main.gd
