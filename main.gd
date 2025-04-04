@@ -104,3 +104,12 @@ func clearEnemies() -> void:
 		enemy.queue_free()
 	for reward in get_tree().get_nodes_in_group("rewards"):
 		reward.queue_free()
+
+
+func _on_bullet_shot_enemy() -> void:
+	print("shot enemy signal properly received")
+	
+
+
+func _on_bullet_shot_gold() -> void:
+	print("shot gold signal properly received")

@@ -12,6 +12,8 @@ radius = 24.0208
 material = SubResource("CanvasItemMaterial_rtl8c")
 collision_mask = 2
 gravity_scale = 0.0
+contact_monitor = true
+max_contacts_reported = 1
 script = ExtResource("1_v7oki")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

@@ -1,6 +1,5 @@
 extends Area2D
 signal hit
-signal attack
 signal hit_gold
 @export var bullet_scene: PackedScene
 @export var speed = 300 # How fast the player will move (pixels/sec).
