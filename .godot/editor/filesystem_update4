@@ -1,9 +1,6 @@
-res://main.tscn
+res://bullet.tscn
 res://hud.tscn
+res://main.tscn
+res://mob.tscn
 res://reward.tscn
 res://scene1.tscn
-res://bullet.tscn
-res://mob.tscn
-res://bullet.gd
-res://mob.gd
-res://main.gd
